@@ -147,6 +147,93 @@
       text-shadow: 0 0 10px rgba(255, 165, 0, 0.6);
     }
 
+    /* Boss Level Popup Alert */
+    .boss-level-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 30px 50px;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      border: 3px solid rgba(251, 191, 36, 0.7);
+      box-shadow:
+        0 0 40px rgba(251, 191, 36, 0.8),
+        0 0 80px rgba(251, 191, 36, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .boss-level-popup.show {
+      animation: bossPopupShow 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    @keyframes bossPopupShow {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+      }
+      70% {
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .boss-level-popup.hidden {
+      display: none;
+    }
+
+    .boss-popup-icon {
+      font-size: 2.5rem;
+      animation: bossIconPulse 0.8s ease-in-out infinite;
+    }
+
+    .boss-popup-title {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.7));
+    }
+
+    .boss-popup-subtitle {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fbbf24;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    }
+
+    @keyframes bossIconPulse {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.8));
+      }
+      50% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 40px rgba(251, 191, 36, 1));
+      }
+    }
+
     /* Compact Stats Dashboard */
     .stats-dashboard {
       display: flex;
@@ -1707,6 +1794,13 @@
     </div>
   </div>
 
+  <!-- Boss Level Popup Alert -->
+  <div id="bossLevelPopup" class="boss-level-popup hidden">
+    <div class="boss-popup-icon">⚠️</div>
+    <div class="boss-popup-title">BOSS LEVEL</div>
+    <div class="boss-popup-subtitle">FINAL CHALLENGE</div>
+  </div>
+
   <!-- BOSS Alert Overlay -->
   <div class="boss-alert-overlay" id="bossAlertOverlay" style="display: none;">
     <div class="boss-alert-box">
@@ -1975,11 +2069,10 @@
         checkForMatch();
       }, 300); // Let everything render first
 
-      document.getElementById('endScreen').classList.add('hidden');
-
-      // Show BOSS alert if level 10
+      // Show Boss Level popup alert when entering Level 10
       if (gameState.level === 10) {
-        showBossAlert();
+        console.log('Level 10 detected! Triggering boss popup...');
+        triggerBossPopup();
       }
 
       render();
@@ -2538,6 +2631,35 @@
           overlay.classList.remove('fade-out');
         }, 500);
       }, 2000);
+    }
+
+    // Trigger Boss Level Popup Alert
+    function triggerBossPopup() {
+      const popup = document.getElementById('bossLevelPopup');
+
+      if (!popup) {
+        console.error('Boss popup element not found!');
+        return;
+      }
+
+      console.log('Showing Boss Level popup!');
+
+      // Reset and show the popup with animation
+      popup.classList.remove('hidden');
+      popup.classList.remove('show');
+
+      // Force reflow to restart animation
+      void popup.offsetWidth;
+
+      // Add show class to trigger animation
+      popup.classList.add('show');
+
+      // Hide after 2.5 seconds
+      setTimeout(() => {
+        console.log('Hiding Boss Level popup');
+        popup.classList.remove('show');
+        popup.classList.add('hidden');
+      }, 2500);
     }
 
     // Start
