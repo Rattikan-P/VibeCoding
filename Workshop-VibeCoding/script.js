@@ -177,6 +177,12 @@ gameState.initialGrid = gameState.grid.map(row => [...row]);
 gameState.passengerQueue = createPassengerQueue();
 generatePassenger();
 
+// Reset preview passenger opacity for new level
+const nextPassengerIcon = document.getElementById('nextPassengerIcon');
+if (nextPassengerIcon) {
+nextPassengerIcon.style.opacity = '1';
+}
+
 // CRITICAL: Check if initial passenger matches any cars in waiting zone
 // This ensures matching works from the start
 setTimeout(() => {
@@ -729,9 +735,15 @@ currentPassengerSlot.classList.add(colorClass);
 
 // Clear and apply color to next passenger icon
 nextPassengerIcon.className = 'next-passenger-icon';
-if (gameState.nextPassenger) {
+const totalRemainingCars = countRemainingCars() + gameState.waitingZone.filter(car => car !== null).length;
+
+if (gameState.nextPassenger && totalRemainingCars > 0) {
 const colorClass = `${PASSENGER_CLASS_PREFIX}${gameState.nextPassenger}`;
 nextPassengerIcon.classList.add(colorClass);
+nextPassengerIcon.style.opacity = '1'; // Show preview when cars exist
+} else {
+// Hide preview when no cars remaining
+nextPassengerIcon.style.opacity = '0';
 }
 }
 
