@@ -1074,41 +1074,51 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(15, 20, 25, 0.95);
+      background: rgba(15, 20, 25, 0.92);
       backdrop-filter: blur(20px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .end-screen:not(.hidden) {
+      opacity: 1;
     }
 
     .end-screen.hidden {
       display: none;
+      opacity: 0;
     }
 
     .overlay-card {
-      background: rgba(25, 35, 50, 0.95);
+      background: rgba(30, 40, 55, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       color: #e2e8f0;
-      padding: 40px;
-      border-radius: 16px;
+      padding: 50px;
+      border-radius: 24px;
       text-align: center;
       max-width: 90%;
-      width: 400px;
-      animation: slideUp 0.4s ease;
-      border: 1px solid rgba(100, 150, 255, 0.2);
+      width: 450px;
+      animation: slideUpFade 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(100, 150, 255, 0.3);
       box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        0 25px 70px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(100, 150, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
-    @keyframes slideUp {
+    @keyframes slideUpFade {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
@@ -1372,59 +1382,101 @@
 
     /* Level Complete Screen Styles */
     .level-complete-title {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       line-height: 1.2;
       margin: 0 0 16px 0;
+      font-weight: 800;
+      animation: titleBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes titleBounce {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      70% {
+        transform: scale(0.95);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .level-complete-stats {
       font-size: 1.1rem;
-      margin: 0 0 30px 0;
+      margin: 0 0 35px 0;
       color: #94a3b8;
     }
 
     .level-complete-buttons {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 15px;
       align-items: center;
+      width: 100%;
     }
 
-    .level-complete-btn {
+    /* Primary Button - Next Level */
+    .level-complete-btn.primary {
       background: linear-gradient(135deg, #3b82f6, #2563eb);
       color: #ffffff;
       border: none;
-      padding: 14px 48px;
-      font-size: 1rem;
-      font-weight: 700;
+      padding: 16px 56px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 1px;
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow:
-        0 4px 20px rgba(59, 130, 246, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      min-width: 200px;
+        0 4px 20px rgba(59, 130, 246, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      min-width: 220px;
+      text-transform: uppercase;
     }
 
-    .level-complete-btn:hover {
+    .level-complete-btn.primary:hover {
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      transform: translateY(-2px);
+      transform: translateY(-3px) scale(1.02);
       box-shadow:
-        0 6px 30px rgba(59, 130, 246, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        0 8px 35px rgba(59, 130, 246, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    /* Secondary Buttons Row */
+    .secondary-buttons-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      width: 100%;
     }
 
     .level-complete-btn.secondary {
-      background: rgba(40, 50, 70, 0.8);
-      border: 1px solid rgba(100, 150, 255, 0.3);
+      background: rgba(40, 50, 70, 0.6);
+      border: 2px solid rgba(100, 150, 255, 0.3);
+      color: #cbd5e1;
+      padding: 12px 28px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      min-width: 120px;
+      text-transform: uppercase;
     }
 
     .level-complete-btn.secondary:hover {
       background: rgba(50, 60, 85, 0.9);
       border-color: rgba(100, 150, 255, 0.5);
+      transform: translateY(-2px);
       box-shadow:
         0 6px 20px rgba(100, 150, 255, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -1870,7 +1922,7 @@
 
   <!-- Level Complete Screen -->
   <div class="end-screen hidden" id="levelCompleteScreen">
-    <div class="welcome-container">
+    <div class="overlay-card">
       <h1 class="welcome-title level-complete-title">
         <span class="gradient-orange">LEVEL</span>
         <span id="levelCompleteNumber" class="gradient-purple">1</span>
@@ -2343,24 +2395,29 @@
         // Update stats
         levelCompleteStats.textContent = `Match: ${gameState.match} | Moves: ${gameState.moves}`;
 
-        // Build buttons array
-        let buttons = [];
+        // Build buttons HTML with new layout
+        let buttonsHTML = '';
+
+        // Primary: Next Level button (only if level < 10)
+        if (gameState.level < 10) {
+          buttonsHTML += `<button class="level-complete-btn primary" onclick="nextLevel()">Next Level →</button>`;
+        }
+
+        // Secondary row: Previous and Retry
+        buttonsHTML += `<div class="secondary-buttons-row">`;
 
         // Previous Level button (only if level > 1)
         if (gameState.level > 1) {
-          buttons.push(`<button class="level-complete-btn secondary" onclick="previousLevel()">← PREVIOUS LEVEL</button>`);
+          buttonsHTML += `<button class="level-complete-btn secondary" onclick="previousLevel()">← Prev</button>`;
         }
 
         // Retry Level button
-        buttons.push(`<button class="level-complete-btn secondary" onclick="restartLevel()">↻ RETRY LEVEL</button>`);
+        buttonsHTML += `<button class="level-complete-btn secondary" onclick="restartLevel()">↻ Retry</button>`;
 
-        // Next Level button (primary, only if level < 10)
-        if (gameState.level < 10) {
-          buttons.push(`<button class="level-complete-btn" onclick="nextLevel()">NEXT LEVEL →</button>`);
-        }
+        buttonsHTML += `</div>`;
 
         // Set buttons HTML
-        levelCompleteButtons.innerHTML = buttons.join('');
+        levelCompleteButtons.innerHTML = buttonsHTML;
 
         // Show screen
         levelCompleteScreen.classList.remove('hidden');
