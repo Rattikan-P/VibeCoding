@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Parking</title>
+  <title>Perfect Match Parking</title>
   <style>
     * {
       margin: 0;
@@ -1125,14 +1125,21 @@
     }
 
     .gradient-purple {
-      background: linear-gradient(135deg, #a78bfa, #f472b6);
+      background: linear-gradient(135deg, #a78bfa, #fb7185);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    background-clip: text;
+    }
+
+    .gradient-blue {
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .gradient-orange {
-      background: linear-gradient(135deg, #fbbf24, #34d399);
+      background: linear-gradient(135deg, #fbbf24, #2dd4bf);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -1633,7 +1640,7 @@
       <!-- Header - Single line -->
       <div class="header-row">
         <div class="title-section">
-          <h1>SMART PARKING</h1>
+          <h1>PERFECT MATCH PARKING</h1>
         </div>
         <div class="controls-row">
           <button class="icon-btn" onclick="restartLevel()" title="Restart">↻</button>
@@ -1712,8 +1719,9 @@
   <div class="end-screen" id="welcomeScreen">
     <div class="welcome-container">
       <h1 class="welcome-title">
-        <span class="gradient-purple">Smart</span>
-        <span class="gradient-orange">Parking</span>
+        <span class="gradient-purple">Perfect</span>
+        <span class="gradient-blue">Match</span>
+        <span class="gradient-orange"> Parking</span>
       </h1>
       <p class="welcome-subtitle">Match colored cars to passengers</p>
       <div class="welcome-instructions">
@@ -2116,8 +2124,8 @@
           // PHASE 1: Highlight car with gold pulse (passenger glow stays active)
           carElement.classList.add('match-ready');
 
-          // PHASE 2: Wait 0.8s - both car and passenger (with glow) stay fully visible
-          // ENHANCED DELAY: Gives player time to see the match success
+          // PHASE 2: Wait 0.35s - both car and passenger (with glow) stay fully visible
+          // SNAPPY DELAY: Faster gameplay feel
           setTimeout(() => {
             // PHASE 3: Start simultaneous fade-out - car and passenger depart together
             slotElement.classList.add('matching');
@@ -2155,7 +2163,7 @@
                 checkForMatch();
               }, 300); // 100ms render delay + 200ms to let passenger fully arrive
             }, 650); // Fade-out animation duration (0.65s)
-          }, 800); // ENHANCED: Visibility delay increased to 0.8s for better visibility
+          }, 350); // SNAPPY: Visibility delay reduced to 0.35s for faster gameplay
         } else {
           gameState.isProcessingMatch = false;
           gameState.matchingSlots = gameState.matchingSlots.filter(idx => idx !== matchIndex);
