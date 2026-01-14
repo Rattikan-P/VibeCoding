@@ -294,11 +294,10 @@ gameState.moves++;
 render();
 checkGameEnd();
 
-// DELAY: Let car animation complete (0.65s) + settle time (100ms) before checking match
-// This ensures the car is fully visible in the slot before match detection
+// DELAY: Minimal delay for instant slot entry feel
 setTimeout(() => {
 checkForMatch();
-}, 750); // 650ms animation + 100ms settle time
+}, 50); // Instant slot entry - 50ms for smooth transition
 
 return true;
 }
